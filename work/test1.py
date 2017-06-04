@@ -2,10 +2,10 @@
 from Data import Data
 from sklearn.ensemble import RandomForestClassifier
 
-def RandomForest(data,feature_train,feature_validation,EST):
-    rfc=RandomForestClassifier(n_estimators=EST)
+def RandomForest(data,feature_train):
+    rfc=RandomForestClassifier(n_estimators=1)
     rfc.fit(feature_train,data.label_train)
-    s=rfc.score(feature_validation,data.label_validation)
+    s=rfc.score(feature_train,data.label_train)
     return s
 
 def RandomForestTest(name,EST):
@@ -18,17 +18,20 @@ def RandomForestTest(name,EST):
     score=[0]*l
     for i in range(0,l):
         feature_train=[]
-        feature_validation=[]
         for a in train:
             feature_train.append(a[i:(i+1)])
-        for a in validation:
-            feature_validation.append(a[i:(i+1)])
-        score[i]=RandomForest(data,feature_train,feature_validation,EST)
+        score[i]=RandomForest(data,feature_train)
         if i%256==0:
             print i
     ss=[]
     ss.extend(score)
     ss.sort()
+    base=ss[-128]
+    chose=[]
+    for j in range(0,l):
+        if score[j]>base:
+            chose.append(j)
+    print chose
     o=0.0
     for j in range(10,min(512,l)):
         base=ss[-j]
@@ -51,7 +54,7 @@ def RandomForestTest(name,EST):
         rfc=RandomForestClassifier(n_estimators=EST)
         rfc.fit(feature_train,data.label_train)
         s=rfc.score(feature_validation,data.label_validation)
-        #print base,s
+        print base,s
         if s>o:
             o=s
             pp=j
