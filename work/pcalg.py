@@ -91,16 +91,20 @@ def pca(name,ker):
     clf.fit(vecs_pca[:l1],labels2)
     res=clf.predict(vecs_pca[-l2:])
     tot0=tot1=0
+    f=file('./luogan/'+name+'.txt','w')
     for i in range(0,l2):
         if res[i]<1e-3:
             tot0+=1
+            f.write('0\n')
         else:
             tot1+=1
+            f.write('1\n')
         labels[-l2+i]=res[i]+4
+    f.close()
     print tot0,tot1
     draw(122,vecs_pca,'SVM',labels)
     plt.show()
 
 if __name__ == "__main__":
-#    pca('bird','rbf')
-    pca('cat','rbf')
+    pca('bird','rbf')
+#    pca('cat','rbf')
