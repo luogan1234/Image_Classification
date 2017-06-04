@@ -91,6 +91,7 @@ def pca(name,ker):
     clf.fit(vecs_pca[:l1],labels2)
     res=clf.predict(vecs_pca[-l2:])
     tot0=tot1=0
+    np.save('./luogan/'+name,res)
     f=file('./luogan/'+name+'.txt','w')
     for i in range(0,l2):
         if res[i]<1e-3:
