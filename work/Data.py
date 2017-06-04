@@ -1,6 +1,6 @@
 #coding:UTF-8
 import scipy.io as scio
-
+import numpy as np
 class Data(object):
     def __init__(self,name):
         self.name=name
@@ -27,5 +27,6 @@ class Data(object):
         self.test=self.read(self.name+'_test')
         self.train=self.read(self.name+'_train')
         self.validation=self.read(self.name+'_validation')
+        # self.fake_positive = np.load('../data/fake_'+self.name+'_positive.npy')
         self.build()
         print 'read '+self.name+' data done.'
