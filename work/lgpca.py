@@ -86,26 +86,24 @@ def pca(name,ker):
             labels[l1+j]=5
     print tot,tot0,tot1,l2
     plt.figure(1,figsize=(20,10))
-    draw(121,vecs_pca,'PCA',labels)
+    draw(121,vecs_pca,'PCA-'+name,labels)
     clf=SVC(kernel=ker,degree=2,C=1)
     clf.fit(vecs_pca[:l1],labels2)
     res=clf.predict(vecs_pca[-l2:])
     tot0=tot1=0
     np.save('./luogan/'+name,res)
-    f=file('./luogan/'+name+'.txt','w')
+#    res=np.load('vote_'+name+'.npy')
     for i in range(0,l2):
-        if res[i]<1e-3:
+        if res[i]<0.5:
             tot0+=1
-            f.write('0\n')
         else:
             tot1+=1
-            f.write('1\n')
-        labels[-l2+i]=res[i]+4
-    f.close()
+        labels[-l2+i]=int(round(res[i])+1e-3)+4
     print tot0,tot1
-    draw(122,vecs_pca,'SVM',labels)
+    draw(122,vecs_pca,'SVM-'+name,labels)
+#    draw(122,vecs_pca,'merge-'+name,labels)
     plt.show()
 
 if __name__ == "__main__":
-    pca('bird','rbf')
-#    pca('cat','rbf')
+#    pca('bird','rbf')
+    pca('cat','rbf')

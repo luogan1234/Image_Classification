@@ -36,7 +36,7 @@ def RandomForest(name):
         for v in vali:
             if v[i]<=eps:
                 s2+=1
-        num.append({'flag':i,'tot':1.0*s1/l1-1.0*s2/l2})
+        num.append({'flag':i,'tot':1.0*s1/l1+1.0*s2/l2})
     num.sort(cmp=cmp2)
     t=[]
     v=[]
